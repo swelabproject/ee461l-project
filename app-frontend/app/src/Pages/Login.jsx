@@ -7,6 +7,13 @@ export const Login = (props) => {
 
     const handleSubmit = (e) => {
         // call API validateCredentials
+        fetch("/validateCredentials").then(
+            res => res.json()
+        ).then(
+            message => {
+                console.log(message)
+            }
+        )
         e.preventDefault();
         console.log(username + " " + password);
         authorized(e)
