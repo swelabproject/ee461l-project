@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Login } from "./Pages/Login"
+import { Forgot } from "./Pages/Forgot"
 import './Pages/stylesheet.css';
 
 
@@ -39,7 +40,7 @@ function App() {
         console.log("on the reset password page")
         return (
             <div>
-               <p> reset password page placeholder placeholder </p>
+               <Forgot onPageUpdate={togglePage}/>
                 <button onClick={() => setCurrentPage('login')}className="redirect"> Return to Login page.</button>
            </div>
         )
