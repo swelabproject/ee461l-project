@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Login } from "./Pages/Login"
 import './Pages/stylesheet.css';
+import {Create_User} from "./Pages/Create_User";
 
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
         console.log("on the create new user page")
         return (
            <div>
-               <p> create new user placeholder </p>
+               <Create_User onPageUpdate={togglePage}/>
                <button onClick={() => setCurrentPage('login')}className="redirect"> Return to Login page.</button>
            </div>
         )
