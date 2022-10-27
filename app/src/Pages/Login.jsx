@@ -4,19 +4,35 @@ import './stylesheet.css';
 export const Login = (props) => {
     const [username, setUserName] = useState('')
     const [password, setPassword] = useState('')
+    const [show, setShow] = useState(false)
 
     const handleSubmit = (e) => {
+        e.preventDefault()
         // call API validateCredentials
-        fetch("/validateCredentials").then(
-            res => res.json()
-        ).then(
-            message => {
-                console.log(message)
-            }
-        )
-        e.preventDefault();
-        console.log(username + " " + password);
-        authorized(e)
+        const reqOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({'user': username, 'password': password})
+        }
+        try {
+            fetch("/validateCredentials", reqOptions).then(
+                res => res.json()
+            ).then((data) => {
+                    console.log(data)
+                    if (data.validation === "valid") {
+                        console.log("found user and password")
+                        authorized(e)
+                    } else {
+                        console.log("DIDNT FIND user and password")
+                       invalidCredentials(e)
+                    }
+                })
+
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     const authorized = (e) => {
@@ -31,6 +47,10 @@ export const Login = (props) => {
         props.onPageUpdate('login')
     }
 
+    const handleShowPass = (e) => {
+
+    }
+
     return (
         <div className="login-container">
             <h1> Log In</h1>
@@ -42,7 +62,6 @@ export const Login = (props) => {
                        placeholder="username"
                        id="username"
                        name="username"></input>
-
                 <label htmlFor="password">Password</label>
                 <input value={password}
                        onChange={(e) => setPassword(e.target.value)}
