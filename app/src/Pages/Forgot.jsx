@@ -23,7 +23,7 @@ export const Forgot = (props) => {
                         console.log("found user")
                         authorized(e)
                     } else {
-                        console.log("DIDNT FIND user and password")
+                        console.log("DIDNT FIND username")
                        invalidUsername(e)
                     }
                 })
@@ -56,6 +56,7 @@ export const Forgot = (props) => {
                        placeholder="username"
                        id="username"
                        name="username"></input>
+                <button type="submit">Reset Password</button>
             </form>
         </div>
 
