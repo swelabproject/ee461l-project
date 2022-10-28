@@ -3,6 +3,7 @@ import './stylesheet.css';
 
 export const Forgot = (props) => {
     const [username, setUserName] = useState('')
+    const [name, setName] = useState('')
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -12,7 +13,7 @@ export const Forgot = (props) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({'user': username})
+            body: JSON.stringify({'user': username, 'name': name})
         }
         try {
             fetch("/validateUsername", reqOptions).then(
@@ -20,10 +21,10 @@ export const Forgot = (props) => {
             ).then((data) => {
                     console.log(data)
                     if (data.validation === "valid") {
-                        console.log("found user")
+                        console.log("found valid user")
                         authorized(e)
                     } else {
-                        console.log("DIDNT FIND username")
+                        console.log("DIDNT FIND username and id match")
                        invalidUsername(e)
                     }
                 })
@@ -53,7 +54,14 @@ export const Forgot = (props) => {
                 <input value={username}
                        onChange={(e) => setUserName(e.target.value)}
                        type="username"
-                       placeholder="username"
+                       placeholder="Username (ID)"
+                       id="username"
+                       name="username"></input>
+                <label htmlFor="name">Name</label>
+                <input value={name}
+                       onChange={(e) => setName(e.target.value)}
+                       type="name"
+                       placeholder="Full Name"
                        id="username"
                        name="username"></input>
                 <button type="submit">Reset Password</button>
