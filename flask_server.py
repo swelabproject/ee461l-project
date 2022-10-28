@@ -40,6 +40,27 @@ def validate_credentials():
 def create_new_user():
     return jsonify('test - hit the server!!')
 
+@app.route('/validateUsername', methods=['POST'])
+@cross_origin()
+def validate_username():
+    try:
+        data = request.json
+        user = data['user']
+        client_connection = pymongo.MongoClient(
+            "mongodb+srv://jgirish:DrLQnjpMZlqiUjm9@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority")
+        db = client_connection.SWELAB
+        col = db.Users
+        found = col.find_one({"id": user})
+        if found.toString() == 'None':
+            return jsonify({"validation": 'invalid'})
+        else:
+            return jsonify({"validation": 'valid'})
+    except Exception as ex:
+        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        print(message)
+        return jsonify({"validation": 'invalid'})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
