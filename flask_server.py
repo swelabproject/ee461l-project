@@ -40,17 +40,18 @@ def validate_credentials():
 def create_new_user():
     return jsonify('test - hit the server!!')
 
-@app.route('/validateUsername', methods=['POST'])
+@app.route("/validateUsername", methods=['POST'])
 @cross_origin()
 def validate_username():
     try:
         data = request.json
         user = data['user']
+        name = data['name']
         client_connection = pymongo.MongoClient(
-            "mongodb+srv://jgirish:DrLQnjpMZlqiUjm9@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority")
+            "mongodb+srv://pwang:poOA8uRsRRu0ZoLx@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority")
         db = client_connection.SWELAB
         col = db.Users
-        found = col.find_one({"id": user})
+        found = col.find_one({"id": user, "name": name})
         if found.toString() == 'None':
             return jsonify({"validation": 'invalid'})
         else:
