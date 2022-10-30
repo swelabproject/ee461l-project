@@ -44,5 +44,19 @@ def validate_credentials():
 # @cross_origin()
 # def create_new_user():
 
+
+@app.route('/manageproject/in/<projectID>&<int:qty>')
+def checkIn_hardware(projectID, qty):
+    resp = Response()
+    msg = {'projectID':projectID, 'qty':qty}
+    return jsonify(msg)
+
+@app.route('/manageproject/out/<projectID>&<int:qty>')
+def checkOut_hardware(projectID, qty):
+    resp = Response()
+    msg = {'projectID':projectID, 'qty':qty}
+    return jsonify(msg)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
