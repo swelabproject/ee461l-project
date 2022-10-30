@@ -56,6 +56,14 @@ def create_new_user():
 
         else:
             return jsonify({"validation": 'invalid'})
+
+
+        # if found.toString() == 'None':
+        #     return jsonify({"validation": 'invalid'})
+        # else:
+        #     return jsonify({"validation": 'valid'})
+
+
     except Exception as ex:
         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
         message = template.format(type(ex).__name__, ex.args)
