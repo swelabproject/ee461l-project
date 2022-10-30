@@ -35,10 +35,41 @@ def validate_credentials():
         return jsonify({"validation": 'invalid'})
 
 
-@app.route('/createNewUser')
+@app.route('/createNewUser', methods=['POST'])
 @cross_origin()
 def create_new_user():
-    return jsonify('test - hit the server!!')
+    try:
+        data = request.json
+        user = data['user']
+        password = data['password']
+        name = data['name']
+        client_connection = pymongo.MongoClient(
+            "mongodb+srv://jgirish:DrLQnjpMZlqiUjm9@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority")
+        db = client_connection.SWELAB
+        col = db.Users
+        found = col.find_one({"id": user, "password": password})
+        if found.toString() == 'None':
+            #return jsonify({"validation": 'invalid'})
+                #read json data and sort out the inputs, get key for ID,pass, and name, and search for them.
+
+            return jsonify({"validation": 'valid'})
+
+        else:
+            return jsonify({"validation": 'invalid'})
+    except Exception as ex:
+        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        print(message)
+        return jsonify({"validation": 'invalid'})
+
+    #return jsonify('test - hit the server!!')
+
+
+    #
+    # @app.route('/createNewUser')
+    # @cross_origin()
+    # def create_new_user():
+    #     return jsonify('test - hit the server!!')
 
 
 if __name__ == '__main__':
