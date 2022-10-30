@@ -1,3 +1,4 @@
+import certifi
 from flask import Flask, jsonify, send_from_directory, request
 from flask_cors import CORS, cross_origin
 import pymongo
@@ -19,15 +20,19 @@ def validate_credentials():
         data = request.json
         user = data['user']
         password = data['password']
+        print(user)
+        print(password)
         client_connection = pymongo.MongoClient(
-            "mongodb+srv://jgirish:DrLQnjpMZlqiUjm9@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority")
+            "mongodb+srv://jgirish:DrLQnjpMZlqiUjm9@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
         db = client_connection.SWELAB
         col = db.Users
+        print("connected possibly")
         found = col.find_one({"id": user, "password": password})
-        if found.toString() == 'None':
-            return jsonify({"validation": 'invalid'})
-        else:
+        print(found)
+        if col.count_documents(found):
             return jsonify({"validation": 'valid'})
+        else:
+            return jsonify({"validation": 'invalid'})
     except Exception as ex:
         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
         message = template.format(type(ex).__name__, ex.args)
