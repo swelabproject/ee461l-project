@@ -9,44 +9,44 @@ const hw1_ava = 100;
 const hw2_ava = 100;
 
 function checkIn_hardware1(){
-    fetch('/manageproject/in/' + projectId + '&' + document.getElementById("input1").value)
+    fetch('/manageproject/in1/' + projectId + '&' + document.getElementById("input1").value)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
-          alert(text.qty + " hardware sets checked in.");
+          alert(text.qty + " hardware sets checked in in set 1.");
           projectId = text.projectID;
           hw1_ava = hw1_ava + text.qty;
       });
 }
 
 function checkIn_hardware2(){
-    fetch('/manageproject/in/' + projectId + '&' + document.getElementById("input2").value)
+    fetch('/manageproject/in2/' + projectId + '&' + document.getElementById("input2").value)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
-          alert(text.qty + " hardware sets checked in.");
+          alert(text.qty + " hardware sets checked in in set 2.");
           projectId = text.projectID;
           hw1_ava = hw1_ava + text.qty;
       });
 }
 
 function checkOut_hardware1(){
-    fetch('/manageproject/out/' + projectId + '&' + document.getElementById("input1").value)
+    fetch('/manageproject/out1/' + projectId + '&' + document.getElementById("input1").value)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
-          alert(text.qty + " hardware sets checked out.");
+          alert(text.qty + " hardware sets checked out in set 1.");
           projectId = text.projectID;
           hw1_ava = hw1_ava - text.qty;
       });
 }
 
 function checkOut_hardware2(){
-    fetch('/manageproject/out/' + projectId + '&' + document.getElementById("input2").value)
+    fetch('/manageproject/out2/' + projectId + '&' + document.getElementById("input2").value)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
-          alert(text.qty + " hardware sets checked out.");
+          alert(text.qty + " hardware sets checked out in set 2.");
           projectId = text.projectID;
           hw1_ava = hw1_ava - text.qty;
       });
