@@ -45,14 +45,28 @@ def validate_credentials():
 # def create_new_user():
 
 
-@app.route('/manageproject/in/<projectID>&<int:qty>')
-def checkIn_hardware(projectID, qty):
+#resource management
+
+@app.route('/manageproject/in1/<projectID>&<int:qty>')
+def checkIn_hardwareSet1(projectID, qty):
     resp = Response()
     msg = {'projectID':projectID, 'qty':qty}
     return jsonify(msg)
 
-@app.route('/manageproject/out/<projectID>&<int:qty>')
-def checkOut_hardware(projectID, qty):
+@app.route('/manageproject/in2/<projectID>&<int:qty>')
+def checkIn_hardwareSet2(projectID, qty):
+    resp = Response()
+    msg = {'projectID':projectID, 'qty':qty}
+    return jsonify(msg)
+
+@app.route('/manageproject/out1/<projectID>&<int:qty>')
+def checkOut_hardwareSet1(projectID, qty):
+    resp = Response()
+    msg = {'projectID':projectID, 'qty':qty}
+    return jsonify(msg)
+
+@app.route('/manageproject/out2/<projectID>&<int:qty>')
+def checkOut_hardwareSet2(projectID, qty):
     resp = Response()
     msg = {'projectID':projectID, 'qty':qty}
     return jsonify(msg)
