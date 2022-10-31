@@ -53,14 +53,15 @@ def validate_username():
         user = data['user']
         name = data['name']
         client_connection = pymongo.MongoClient(
-            "mongodb+srv://pwang:poOA8uRsRRu0ZoLx@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority")
+            "mongodb+srv://pwang:poOA8uRsRRu0ZoLx@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
         db = client_connection.SWELAB
         col = db.Users
         found = col.find_one({"id": user, "name": name})
-        if found.toString() == 'None':
-            return jsonify({"validation": 'invalid'})
-        else:
+        print(found)
+        if col.count_documents(found):
             return jsonify({"validation": 'valid'})
+        else:
+            return jsonify({"validation": 'invalid'})
     except Exception as ex:
         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
         message = template.format(type(ex).__name__, ex.args)
