@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Login } from "./Pages/Login"
+import { CreateProject } from "./Pages/CreateProject"
 import './Pages/stylesheet.css';
 import {Create_User} from "./Pages/Create_User";
 
@@ -25,6 +26,7 @@ function App() {
         return (
            <div>
                <p> user home page placeholder </p>
+               <button onClick={() => setCurrentPage('create-project')}className="redirect"> Create a project.</button>
                <button onClick={() => setCurrentPage('login')}className="redirect"> Return to Login page.</button>
            </div>
         )
@@ -42,6 +44,16 @@ function App() {
             <div>
                <p> reset password page placeholder placeholder </p>
                 <button onClick={() => setCurrentPage('login')}className="redirect"> Return to Login page.</button>
+           </div>
+        )
+    }
+    else if (currentPage === 'create-project') {
+        console.log("on the create project page")
+        return (
+            <div>
+               <p> create project placeholder </p>
+               <CreateProject onPageUpdate={togglePage}/>
+               <button onClick={() => setCurrentPage('login')}className="redirect"> Return to Login page.</button>
            </div>
         )
     }
