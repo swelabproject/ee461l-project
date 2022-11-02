@@ -44,5 +44,39 @@ def validate_credentials():
 # @cross_origin()
 # def create_new_user():
 
+@app.route('/createProject', methods=['POST'])
+@cross_origin()
+def create_project():
+    print("in create project")
+    try:
+        data = request.json
+        projectname = data['projectname']
+        projectid = data['projectid']
+        users = data['validusers']
+        description = data['description']
+        post = {"name": projectname,
+                "id": projectid,
+                "description": description,
+                "users": users,
+                "checkedout_hw1": 0,
+                "checkedout_hw2": 0}
+        client_connection = pymongo.MongoClient(
+            "mongodb+srv://jgirish:DrLQnjpMZlqiUjm9@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
+        db = client_connection.SWELAB
+        col = db.Projects
+        print("connected possibly")
+        found = col.find_one({"id": projectid})
+        if col.count_documents(found):
+            print("id exists")
+            print(found)
+            return jsonify({"existing": 'true'})
+
+    except Exception as ex:
+        print("adding project to db")
+        post_id = col.insert_one(post).inserted_id  # adds the document to the collection
+        return jsonify("no existing project found")
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)

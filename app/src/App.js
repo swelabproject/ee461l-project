@@ -51,7 +51,6 @@ function App() {
         console.log("on the create project page")
         return (
             <div>
-               <p> create project placeholder </p>
                <CreateProject onPageUpdate={togglePage}/>
                <button onClick={() => setCurrentPage('login')}className="redirect"> Return to Login page.</button>
            </div>

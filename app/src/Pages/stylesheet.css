@@ -95,11 +95,15 @@ button {
 }
 
 .create-project-container {
-  text-align: center;
+  text-align: left;
   flex-direction: column;
   display: flex;
   min-height: 20vh;
-  align-items: center;
+  align-items: left;
   justify-content: center;
   color: lightskyblue;
+}
+.create-project-box{
+    width: 200px;
+    align-items: center;
 }
