@@ -47,28 +47,40 @@ def validate_credentials():
 
 #resource management
 
-@app.route('/manageproject/in1/<projectID>&<int:qty>')
-def checkIn_hardwareSet1(projectID, qty):
-    resp = Response()
-    msg = {'projectID':projectID, 'qty':qty}
+@app.route('/manageproject/in1/<projectID>&<int:qty>&<int:ava>')
+def checkIn_hardwareSet1(projectID, qty, ava):
+    if qty <= (100 - ava):
+        msg = {'projectID':projectID, 'qty':qty}
+    else:
+        qty = 100 - ava
+        msg = {'projectID':projectID, 'qty':qty}
     return jsonify(msg)
 
-@app.route('/manageproject/in2/<projectID>&<int:qty>')
-def checkIn_hardwareSet2(projectID, qty):
-    resp = Response()
-    msg = {'projectID':projectID, 'qty':qty}
+@app.route('/manageproject/in2/<projectID>&<int:qty>&<int:ava>')
+def checkIn_hardwareSet2(projectID, qty, ava):
+    if qty <= (100 - ava):
+        msg = {'projectID':projectID, 'qty':qty}
+    else:
+        qty = 100 - ava
+        msg = {'projectID':projectID, 'qty':qty}
     return jsonify(msg)
 
-@app.route('/manageproject/out1/<projectID>&<int:qty>')
-def checkOut_hardwareSet1(projectID, qty):
-    resp = Response()
-    msg = {'projectID':projectID, 'qty':qty}
+@app.route('/manageproject/out1/<projectID>&<int:qty>&<int:ava>')
+def checkOut_hardwareSet1(projectID, qty, ava):
+    if qty <= ava:
+        msg = {'projectID':projectID, 'qty':qty}
+    else:
+        qty = ava
+        msg = {'projectID':projectID, 'qty':qty}
     return jsonify(msg)
 
-@app.route('/manageproject/out2/<projectID>&<int:qty>')
-def checkOut_hardwareSet2(projectID, qty):
-    resp = Response()
-    msg = {'projectID':projectID, 'qty':qty}
+@app.route('/manageproject/out2/<projectID>&<int:qty>&<int:ava>')
+def checkOut_hardwareSet2(projectID, qty, ava):
+    if qty <= ava:
+        msg = {'projectID':projectID, 'qty':qty}
+    else:
+        qty = ava
+        msg = {'projectID':projectID, 'qty':qty}
     return jsonify(msg)
 
 
