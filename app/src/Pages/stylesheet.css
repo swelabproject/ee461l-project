@@ -93,3 +93,17 @@ button {
   color: black;
   padding: 20px;
 }
+
+.create-project-container {
+  text-align: left;
+  flex-direction: column;
+  display: flex;
+  min-height: 20vh;
+  align-items: left;
+  justify-content: center;
+  color: lightskyblue;
+}
+.create-project-box{
+    width: 200px;
+    align-items: center;
+}
