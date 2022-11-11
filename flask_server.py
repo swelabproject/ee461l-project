@@ -40,7 +40,9 @@ def validate_credentials():
         return jsonify({"validation": 'invalid'})
 
 
-@app.route('/createNewUser')
+# @app.route('/createNewUser')
+@app.route('/createNewUser', methods=['POST'])
+
 @cross_origin()
 def create_new_user():
     print("in create user")
@@ -55,14 +57,14 @@ def create_new_user():
         password = data['password']
         # name = data['name']
         id = data['UserID']
-        authorize_projects = {}
+        authorized_projects = {}
         joined_projects = {}
 
         # post = {"name": name,
         post = {"id": id,
                 "name": user,
                 "password": password,
-                "authorize_projects" : authorize_projects,
+                "authorized_projects" : authorized_projects,
                 "joined_projects": joined_projects
                 }
         client_connection = pymongo.MongoClient(
@@ -83,10 +85,6 @@ def create_new_user():
         print("adding user to db")
         post_id = col.insert_one(post).inserted_id  # adds the document to the collection
         return jsonify("no existing user ID found ; adding user to db")
-
-
-
-    return jsonify('test - hit the server!!')
 
 @app.route("/validateUsername", methods=['POST'])
 @cross_origin()
