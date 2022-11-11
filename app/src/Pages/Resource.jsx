@@ -4,13 +4,11 @@ import logo from './logo.svg';
 import './stylesheet.css';
 
 // taken from prev page
-const userId = "USER A";
-const projectId = "PROJECT X";
 var hw1_ava;
 var hw2_ava;
 
 function checkIn_hardware1(){
-    fetch('/manageproject/in1/' + projectId + '&' + document.getElementById("input1").value + '&' + hw1_ava)
+    fetch('/manageproject/in1/' + document.getElementById("input1").value + '&' + hw1_ava)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
@@ -21,7 +19,7 @@ function checkIn_hardware1(){
 }
 
 function checkIn_hardware2(){
-    fetch('/manageproject/in2/' + projectId + '&' + document.getElementById("input2").value + '&' + hw2_ava)
+    fetch('/manageproject/in2/' + document.getElementById("input2").value + '&' + hw2_ava)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
@@ -32,7 +30,7 @@ function checkIn_hardware2(){
 }
 
 function checkOut_hardware1(){
-    fetch('/manageproject/out1/' + projectId + '&' + document.getElementById("input1").value + '&' + hw1_ava)
+    fetch('/manageproject/out1/' + document.getElementById("input1").value + '&' + hw1_ava)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
@@ -43,7 +41,7 @@ function checkOut_hardware1(){
 }
 
 function checkOut_hardware2(){
-    fetch('/manageproject/out2/' + projectId + '&' + document.getElementById("input2").value + '&' + hw2_ava)
+    fetch('/manageproject/out2/' + document.getElementById("input2").value + '&' + hw2_ava)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
@@ -77,7 +75,6 @@ class Project extends React.Component {
   render(){
     return (
       <div>
-        <label> {this.props.name} </label>
         <p>
           <span id="set1"/>
           <input id="input1" type="text" placeholder="Quantity"/>
@@ -108,7 +105,7 @@ function App() {
   return (
     <div className="login-container">
       <h1> Manage project </h1>
-      <Project name={projectId} av1={hw1_ava} av2={hw2_ava}/>
+      <Project av1={hw1_ava} av2={hw2_ava}/>
       <p/>
     </div>
   );
