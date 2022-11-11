@@ -113,75 +113,75 @@ def retrieve():
     client.close()
     return jsonify(msg)
 
-@app.route('/manageproject/in1/<projectID>&<int:qty>&<int:ava>')
-def checkIn_hardwareSet1(projectID, qty, ava):
+@app.route('/manageproject/in1/<int:qty>&<int:ava>')
+def checkIn_hardwareSet1(qty, ava):
     client = pymongo.MongoClient("mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
     db = client.SWELAB
     sets = db.HWSet
     if qty <= (100 - ava):
         ava+=qty
         sets.update_one({"name": "HWSet1"}, { "$set": { 'availability': ava } })
-        msg = {'projectID':projectID, 'qty':qty}
+        msg = {'qty':qty}
         client.close()
     else:
         qty=100-ava
         ava=100
         sets.update_one({"name": "HWSet1"}, { "$set": { 'availability': ava } })
-        msg = {'projectID':projectID, 'qty':qty}
+        msg = {'qty':qty}
         client.close()
     return jsonify(msg)
 
-@app.route('/manageproject/in2/<projectID>&<int:qty>&<int:ava>')
-def checkIn_hardwareSet2(projectID, qty, ava):
+@app.route('/manageproject/in2/<int:qty>&<int:ava>')
+def checkIn_hardwareSet2(qty, ava):
     client = pymongo.MongoClient("mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
     db = client.SWELAB
     sets = db.HWSet
     if qty <= (100 - ava):
         ava+=qty
         sets.update_one({"name": "HWSet2"}, { "$set": { 'availability': ava } })
-        msg = {'projectID':projectID, 'qty':qty}
+        msg = {'qty':qty}
         client.close()
     else:
         qty=100-ava
         ava=100
         sets.update_one({"name": "HWSet2"}, { "$set": { 'availability': ava } })
-        msg = {'projectID':projectID, 'qty':qty}
+        msg = {'qty':qty}
         client.close()
     return jsonify(msg)
 
-@app.route('/manageproject/out1/<projectID>&<int:qty>&<int:ava>')
-def checkOut_hardwareSet1(projectID, qty, ava):
+@app.route('/manageproject/out1/<int:qty>&<int:ava>')
+def checkOut_hardwareSet1(qty, ava):
     client = pymongo.MongoClient("mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
     db = client.SWELAB
     sets = db.HWSet
     if qty <= ava:
         ava-=qty
         sets.update_one({"name": "HWSet1"}, { "$set": { 'availability': ava } })
-        msg = {'projectID':projectID, 'qty':qty}
+        msg = {'qty':qty}
         client.close()
     else:
         qty=ava
         ava=0
         sets.update_one({"name": "HWSet1"}, { "$set": { 'availability': ava } })
-        msg = {'projectID':projectID, 'qty':qty}
+        msg = {'qty':qty}
         client.close()
     return jsonify(msg)
 
-@app.route('/manageproject/out2/<projectID>&<int:qty>&<int:ava>')
-def checkOut_hardwareSet2(projectID, qty, ava):
+@app.route('/manageproject/out2/<int:qty>&<int:ava>')
+def checkOut_hardwareSet2(qty, ava):
     client = pymongo.MongoClient("mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
     db = client.SWELAB
     sets = db.HWSet
     if qty <= ava:
         ava-=qty
         sets.update_one({"name": "HWSet2"}, { "$set": { 'availability': ava } })
-        msg = {'projectID':projectID, 'qty':qty}
+        msg = {'qty':qty}
         client.close()
     else:
         qty=ava
         ava=0
         sets.update_one({"name": "HWSet2"}, { "$set": { 'availability': ava } })
-        msg = {'projectID':projectID, 'qty':qty}
+        msg = {'qty':qty}
         client.close()
     return jsonify(msg)
 
