@@ -4,7 +4,7 @@ import { CreateProject } from "./Pages/CreateProject"
 import { Forgot } from "./Pages/Forgot"
 import './Pages/stylesheet.css';
 import {Create_User} from "./Pages/Create_User";
-
+import {Project_Home} from "./Pages/Resource";
 
 function App() {
     const [currentPage, setCurrentPage] = useState('login')
@@ -53,6 +53,15 @@ function App() {
         return (
             <div>
                <CreateProject onPageUpdate={togglePage}/>
+               <button onClick={() => setCurrentPage('login')}className="redirect"> Return to Login page.</button>
+           </div>
+        )
+    }
+    else if (currentPage === 'project-home') {
+        console.log("on the project home page")
+        return (
+            <div>
+               <Project_Home onPageUpdate={togglePage}/>
                <button onClick={() => setCurrentPage('login')}className="redirect"> Return to Login page.</button>
            </div>
         )
