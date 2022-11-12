@@ -103,7 +103,7 @@ export const Project_Home = (props) => {
 
    return (
     <div className="login-container">
-      <h1> Manage project </h1>
+      <h1> Manage project Id: {props.projectId}</h1>
       <Project av1={hw1_ava} av2={hw2_ava}/>
       <p/>
     </div>

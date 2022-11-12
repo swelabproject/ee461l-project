@@ -12,10 +12,17 @@ function App() {
     const [currentPage, setCurrentPage] = useState('login')
     const [username, setUserName] = useState('')
     const [password, setPassword] = useState('')
+    const [projectId, setProjectId] = useState('')
 
     const togglePage = (page) => {
         console.log("updating page to " + page)
         setCurrentPage(page);
+    }
+
+    const updateProject = (project) => {
+        console.log("setting project id to " + project)
+        setProjectId(project);
+        console.log(projectId)
     }
 
     if (currentPage === 'login') {
@@ -30,7 +37,7 @@ function App() {
         console.log("on the user home page");
         return (
            <div>
-               <UserHomePage onPageUpdate={togglePage} username={username}/>
+               <UserHomePage onPageUpdate={togglePage} username={username} onProject={updateProject} projectId={projectId}/>
                <button onClick={() => setCurrentPage('login')}className="redirect"> Return to Login page.</button>
            </div>
         )
@@ -64,7 +71,8 @@ function App() {
         console.log("on the project home page")
         return (
             <div>
-               <Project_Home onPageUpdate={togglePage}/>
+               <Project_Home onPageUpdate={togglePage} onProject={updateProject} projectId={projectId}/>
+                <button onClick={() => setCurrentPage('user-home')}className="redirect"> Return to User Home page.</button>
                <button onClick={() => setCurrentPage('login')}className="redirect"> Return to Login page.</button>
            </div>
         )
