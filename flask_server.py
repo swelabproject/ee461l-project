@@ -16,6 +16,7 @@ def serve():
 @app.route('/validateCredentials', methods=['POST'])
 @cross_origin()
 def validate_credentials():
+    print("hi")
     try:
         data = request.json
         user = data['user']
@@ -23,7 +24,8 @@ def validate_credentials():
         print(user)
         print(password)
         client_connection = pymongo.MongoClient(
-            "mongodb+srv://jgirish:DrLQnjpMZlqiUjm9@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
+            "mongodb+srv://jgirish:DrLQnjpMZlqiUjm9@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority",
+            tlsCAFile=certifi.where())
         db = client_connection.SWELAB
         col = db.Users
         print("connected possibly")
@@ -37,13 +39,14 @@ def validate_credentials():
         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
         message = template.format(type(ex).__name__, ex.args)
         print(message)
-        return jsonify({"validation": 'invalid'})
+        return jsonify({"validation": 'poop'})
 
 
 @app.route('/createNewUser')
 @cross_origin()
 def create_new_user():
     return jsonify('test - hit the server!!')
+
 
 @app.route("/validateUsername", methods=['POST'])
 @cross_origin()
@@ -53,7 +56,8 @@ def validate_username():
         user = data['user']
         name = data['name']
         client_connection = pymongo.MongoClient(
-            "mongodb+srv://pwang:poOA8uRsRRu0ZoLx@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
+            "mongodb+srv://pwang:poOA8uRsRRu0ZoLx@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority",
+            tlsCAFile=certifi.where())
         db = client_connection.SWELAB
         col = db.Users
         found = col.find_one({"id": user, "name": name})
@@ -86,7 +90,8 @@ def create_project():
                 "checkedout_hw1": 0,
                 "checkedout_hw2": 0}
         client_connection = pymongo.MongoClient(
-            "mongodb+srv://jgirish:DrLQnjpMZlqiUjm9@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
+            "mongodb+srv://jgirish:DrLQnjpMZlqiUjm9@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority",
+            tlsCAFile=certifi.where())
         db = client_connection.SWELAB
         col = db.Projects
         col2 = db.Users
@@ -106,11 +111,64 @@ def create_project():
             col2.update_one({'id': users[i]}, {'$push': {'authorized_projects': projectid}})
 
         return jsonify("no existing project found")
-    
-   
+
+
+@app.route("/getAuthorizedProjects", methods=['POST'])
+@cross_origin()
+def getAuthorizedProjects():
+    print("#####################")
+    try:
+        data = request.json
+        user = data["username"]
+        client_connection = pymongo.MongoClient(
+            "mongodb+srv://jgirish:DrLQnjpMZlqiUjm9@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority",
+            tlsCAFile=certifi.where())
+        db = client_connection.SWELAB
+        col = db.Users
+        print("hi")
+        found = col.find_one({"id": user})
+        if col.count_documents(found):
+            print(found)
+            return jsonify({"projects": found['authorized_projects']})
+        else:
+            print("no")
+            return jsonify({"validation": 'invalid'})
+
+    except Exception as ex:
+        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        print(message)
+        return jsonify({"validation": 'invalid'})
+
+
+@app.route("/getAuthorizedProjectNames", methods=['POST'])
+@cross_origin()
+def getAuthorizedProjectNames():
+    try:
+        data = request.json
+        projectid = data['projectid']
+        client_connection = pymongo.MongoClient(
+            "mongodb+srv://jgirish:DrLQnjpMZlqiUjm9@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority",
+            tlsCAFile=certifi.where())
+        db = client_connection.SWELAB
+        col2 = db.Projects
+        id2Name = col2.find({"id": projectid})
+        if col2.count_documents(id2Name):
+            return jsonify({"projectName": id2Name.name})
+        else:
+            return jsonify({"validation": 'invalid'})
+    except Exception as ex:
+        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        print(message)
+        return jsonify({"validation": 'invalid'})
+
+
 @app.route('/manageproject')
 def retrieve():
-    client = pymongo.MongoClient("mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
+    client = pymongo.MongoClient(
+        "mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority",
+        tlsCAFile=certifi.where())
     db = client.SWELAB
     sets = db.HWSet
     set1 = sets.find_one({"name": "HWSet1"})
@@ -119,75 +177,87 @@ def retrieve():
     client.close()
     return jsonify(msg)
 
+
 @app.route('/manageproject/in1/<int:qty>&<int:ava>')
 def checkIn_hardwareSet1(qty, ava):
-    client = pymongo.MongoClient("mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
+    client = pymongo.MongoClient(
+        "mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority",
+        tlsCAFile=certifi.where())
     db = client.SWELAB
     sets = db.HWSet
     if qty <= (100 - ava):
-        ava+=qty
-        sets.update_one({"name": "HWSet1"}, { "$set": { 'availability': ava } })
-        msg = {'qty':qty}
+        ava += qty
+        sets.update_one({"name": "HWSet1"}, {"$set": {'availability': ava}})
+        msg = {'qty': qty}
         client.close()
     else:
-        qty=100-ava
-        ava=100
-        sets.update_one({"name": "HWSet1"}, { "$set": { 'availability': ava } })
-        msg = {'qty':qty}
+        qty = 100 - ava
+        ava = 100
+        sets.update_one({"name": "HWSet1"}, {"$set": {'availability': ava}})
+        msg = {'qty': qty}
         client.close()
     return jsonify(msg)
+
 
 @app.route('/manageproject/in2/<int:qty>&<int:ava>')
 def checkIn_hardwareSet2(qty, ava):
-    client = pymongo.MongoClient("mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
+    client = pymongo.MongoClient(
+        "mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority",
+        tlsCAFile=certifi.where())
     db = client.SWELAB
     sets = db.HWSet
     if qty <= (100 - ava):
-        ava+=qty
-        sets.update_one({"name": "HWSet2"}, { "$set": { 'availability': ava } })
-        msg = {'qty':qty}
+        ava += qty
+        sets.update_one({"name": "HWSet2"}, {"$set": {'availability': ava}})
+        msg = {'qty': qty}
         client.close()
     else:
-        qty=100-ava
-        ava=100
-        sets.update_one({"name": "HWSet2"}, { "$set": { 'availability': ava } })
-        msg = {'qty':qty}
+        qty = 100 - ava
+        ava = 100
+        sets.update_one({"name": "HWSet2"}, {"$set": {'availability': ava}})
+        msg = {'qty': qty}
         client.close()
     return jsonify(msg)
+
 
 @app.route('/manageproject/out1/<int:qty>&<int:ava>')
 def checkOut_hardwareSet1(qty, ava):
-    client = pymongo.MongoClient("mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
+    client = pymongo.MongoClient(
+        "mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority",
+        tlsCAFile=certifi.where())
     db = client.SWELAB
     sets = db.HWSet
     if qty <= ava:
-        ava-=qty
-        sets.update_one({"name": "HWSet1"}, { "$set": { 'availability': ava } })
-        msg = {'qty':qty}
+        ava -= qty
+        sets.update_one({"name": "HWSet1"}, {"$set": {'availability': ava}})
+        msg = {'qty': qty}
         client.close()
     else:
-        qty=ava
-        ava=0
-        sets.update_one({"name": "HWSet1"}, { "$set": { 'availability': ava } })
-        msg = {'qty':qty}
+        qty = ava
+        ava = 0
+        sets.update_one({"name": "HWSet1"}, {"$set": {'availability': ava}})
+        msg = {'qty': qty}
         client.close()
     return jsonify(msg)
 
+
 @app.route('/manageproject/out2/<int:qty>&<int:ava>')
 def checkOut_hardwareSet2(qty, ava):
-    client = pymongo.MongoClient("mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
+    client = pymongo.MongoClient(
+        "mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority",
+        tlsCAFile=certifi.where())
     db = client.SWELAB
     sets = db.HWSet
     if qty <= ava:
-        ava-=qty
-        sets.update_one({"name": "HWSet2"}, { "$set": { 'availability': ava } })
-        msg = {'qty':qty}
+        ava -= qty
+        sets.update_one({"name": "HWSet2"}, {"$set": {'availability': ava}})
+        msg = {'qty': qty}
         client.close()
     else:
-        qty=ava
-        ava=0
-        sets.update_one({"name": "HWSet2"}, { "$set": { 'availability': ava } })
-        msg = {'qty':qty}
+        qty = ava
+        ava = 0
+        sets.update_one({"name": "HWSet2"}, {"$set": {'availability': ava}})
+        msg = {'qty': qty}
         client.close()
     return jsonify(msg)
 
@@ -227,6 +297,31 @@ def create_new_user():
         print("adding user to db")
         post_id = col.insert_one(post).inserted_id  # adds the document to the collection
         return jsonify("no existing user ID found ; adding user to db")
+
+# @app.route('/getAuthorizedProjects', methods=['POST'])
+# @cross_origin()
+# def getAuthorizedProjects():
+#     print("hi")
+#     try:
+#         data = request.json
+#         print(data)
+#         username = data["username"]
+#         client_connection = pymongo.MongoClient(
+#             "mongodb+srv://jgirish:DrLQnjpMZlqiUjm9@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
+#         db = client_connection.SWELAB
+#         col = db.Users
+#         print(username)
+#         found = col.find_one({"id": username})
+#         print(found)
+#         if col.count_documents(found):
+#             print("id exists")
+#             print(found)
+#             return jsonify({"projects": found["authorized_projects"]})
+
+#     except Exception as ex:
+#         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+#         message = template.format(type(ex).__name__, ex.args)
+#         print(message)
 
 
 if __name__ == '__main__':

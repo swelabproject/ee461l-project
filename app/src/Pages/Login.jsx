@@ -2,19 +2,21 @@ import React, { useState } from "react"
 import './stylesheet.css';
 
 export const Login = (props) => {
-    const [username, setUserName] = useState('')
-    const [password, setPassword] = useState('')
     const [show, setShow] = useState(false)
+    const[user, setUser] = useState("")
+    const[pwd, setPwd] = useState("")
 
     const handleSubmit = (e) => {
         e.preventDefault()
         // call API validateCredentials
+        props.setUserName(user.toString());
+        console.log(props.username)
         const reqOptions = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({'user': username, 'password': password})
+            body: JSON.stringify({'user': user, 'password': pwd})
         }
         try {
             fetch("/validateCredentials", reqOptions).then(
@@ -56,15 +58,15 @@ export const Login = (props) => {
             <h1> Log In</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="username">Username</label>
-                <input value={username}
-                       onChange={(e) => setUserName(e.target.value)}
+                <input value={user}
+                       onChange={(e) => setUser(e.target.value)}
                        type="username"
                        placeholder="username"
                        id="username"
                        name="username"></input>
                 <label htmlFor="password">Password</label>
-                <input value={password}
-                       onChange={(e) => setPassword(e.target.value)}
+                <input value={pwd}
+                       onChange={(e) => setPwd(e.target.value)}
                        type="password"
                        placeholder="password"
                        id="password"

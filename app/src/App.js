@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { Login } from "./Pages/Login"
-import { CreateProject } from "./Pages/CreateProject"
-import { Forgot } from "./Pages/Forgot"
 import './Pages/stylesheet.css';
 import {Create_User} from "./Pages/Create_User";
+import {UserHomePage} from "./Pages/UserHomePage"; 
+import {CreateProject} from "./Pages/CreateProject"; 
+import {Forgot} from "./Pages/Forgot"; 
 import {Project_Home} from "./Pages/Resource";
+
 
 function App() {
     const [currentPage, setCurrentPage] = useState('login')
+    const [username, setUserName] = useState('')
+    const [password, setPassword] = useState('')
 
     const togglePage = (page) => {
         console.log("updating page to " + page)
@@ -18,7 +22,7 @@ function App() {
         console.log("on the login page");
         return (
            <div>
-               <Login onPageUpdate={togglePage}/>
+               <Login onPageUpdate={togglePage} username={username} setUserName={setUserName} password = {password} setPassword={setPassword} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
                <button onClick={() => setCurrentPage('login')}className="redirect"> Return to Login page.</button>
            </div>
         )
@@ -26,8 +30,7 @@ function App() {
         console.log("on the user home page");
         return (
            <div>
-               <p> user home page placeholder </p>
-               <button onClick={() => setCurrentPage('create-project')}className="redirect"> Create a project.</button>
+               <UserHomePage onPageUpdate={togglePage} username={username}/>
                <button onClick={() => setCurrentPage('login')}className="redirect"> Return to Login page.</button>
            </div>
         )
