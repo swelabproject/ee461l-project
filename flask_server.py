@@ -16,6 +16,7 @@ def serve():
 @app.route('/validateCredentials', methods=['POST'])
 @cross_origin()
 def validate_credentials():
+    print("hi")
     try:
         data = request.json
         user = data['user']
@@ -37,7 +38,7 @@ def validate_credentials():
         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
         message = template.format(type(ex).__name__, ex.args)
         print(message)
-        return jsonify({"validation": 'invalid'})
+        return jsonify({"validation": 'poop'})
 
 
 @app.route('/createNewUser')
@@ -212,7 +213,32 @@ def checkOut_hardwareSet2(qty, ava):
         client.close()
     return jsonify(msg)
 
+# @app.route('/getAuthorizedProjects', methods=['POST'])
+# @cross_origin()
+# def getAuthorizedProjects():
+#     print("hi")
+#     try:
+#         data = request.json
+#         print(data)
+#         username = data["username"]
+#         client_connection = pymongo.MongoClient(
+#             "mongodb+srv://jgirish:DrLQnjpMZlqiUjm9@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
+#         db = client_connection.SWELAB
+#         col = db.Users
+#         print(username)
+#         found = col.find_one({"id": username})
+#         print(found)
+#         if col.count_documents(found):
+#             print("id exists")
+#             print(found)
+#             return jsonify({"projects": found["authorized_projects"]})
+
+#     except Exception as ex:
+#         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+#         message = template.format(type(ex).__name__, ex.args)
+#         print(message)
+
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug = True)

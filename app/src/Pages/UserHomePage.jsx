@@ -2,9 +2,12 @@ import React, { useState } from "react"
 import './stylesheet.css';
 import { CreateProject } from "./CreateProject";
 import { useEffect } from "react";
+import { Accordion } from "react-bootstrap"
+
 
 //do the let project = [call the API for array under authorized users]
 //return is just displaying the create user bs 
+
 
 
 export const UserHomePage = (props) => {
@@ -22,34 +25,52 @@ export const UserHomePage = (props) => {
         setProjects(value.projects); 
         console.log(value.projects); 
     } 
-
-    const handlePage = (val) => {
-        //depends on setCurrentPage to resources and pass in username
-    }
-
-    // const buttons = projects.map((proj_name) => {
-    //     <button value={proj_name} onClick={(e) => handlePage(e.target.value)}className="redirect"> {proj_name} </button>
-    //     console.log("inside the map")
-    // });
-    
+   
     useEffect(() => {
-        listOfProjects(); 
+        listOfProjects();
     }, []); 
 
-    const loadProjects = (val) => {
+    
+    
+
         
+    const handlePage = (val) => {
+        props.onPageUpdate('new-user') //change to vistors page 
     }
+
+    const Buttons = (props) => {
+        return (
+            <div>
+                {projects.map((project) => (<div>{<button type="button" onClick={(e) => handlePage("added to buttons")}className="redirect"> {project} Project1 </button> }</div>)
+                //<li>{project}</li>
+                //<li>{<button type="button" onClick={(e) => handlePage("added to buttons")}className="redirect"> {project} Project1 </button> }</li>
+                )}
+                </div>
+        )}
+        
 
     return (
         <div className="login-container">
-            <h1> UserName Home </h1>
+            <h1> Welcome {props.username} !</h1>
             <h2> Project List </h2>
-            <button></button>
-            {/* {buttons} */}
+
+            {/* <button type="button" onClick={(e) => handlePage("added to buttons")}className="project-button"> {projects[0]} </button>  */}
+            {/* <Buttons>1</Buttons> */}
+            {/* <ul>{projects}</ul> */}
+            {Buttons}
         </div>
     );
-}
 
+};
+
+
+// async function makeButtons(projects){
+//     return(
+//         <button
+//             type="button"
+//             onClick={(e) => handlePage("added to buttons")}className="redirect"> {project} Project1 </button>
+//     );
+// }
 
 
  {/* for projID in user["joinedProjects"]:

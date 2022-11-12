@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import './stylesheet.css';
 
-export const CreateProject = (props) => {
+export const CreateProject = () => {
     const [projectname, setProjectName] = useState('')
     const [projectid, setProjectID] = useState('')
     const [validUser1, setValidUser1] = useState('')
@@ -29,7 +29,7 @@ export const CreateProject = (props) => {
                         duplicate(e)
                 } else {
                         console.log("no existing project found")
-                        props.onPageUpdate('user-home')
+                        //props.onPageUpdate('user-home')
                 }
             })
         }
