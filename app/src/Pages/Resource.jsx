@@ -1,50 +1,50 @@
 import React from 'react';
 import './stylesheet.css';
 
-// taken from prev page
+var projectID = "test_project"
 var hw1_ava;
 var hw2_ava;
 
 function checkIn_hardware1(){
-    fetch('/manageproject/in1/' + document.getElementById("input1").value + '&' + hw1_ava)
+    fetch('/manageproject/in1/' + projectID + '&' + document.getElementById("input1").value + '&' + hw1_ava)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
           hw1_ava = hw1_ava + text.qty;
-          alert(text.qty + " hardware sets checked in by " + text.projectID + " in set 1.");
+          alert(text.qty + " hardware sets checked in by project " + projectID + " in set 1.");
           window.location.reload();
       });
 }
 
 function checkIn_hardware2(){
-    fetch('/manageproject/in2/' + document.getElementById("input2").value + '&' + hw2_ava)
+    fetch('/manageproject/in2/' + projectID + '&' + document.getElementById("input2").value + '&' + hw2_ava)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
           hw2_ava = hw2_ava + text.qty;
-          alert(text.qty + " hardware sets checked in by " + text.projectID + " in set 2.");
+          alert(text.qty + " hardware sets checked in by project " + projectID + " in set 2.");
           window.location.reload();
       });
 }
 
 function checkOut_hardware1(){
-    fetch('/manageproject/out1/' + document.getElementById("input1").value + '&' + hw1_ava)
+    fetch('/manageproject/out1/' + projectID + '&' + document.getElementById("input1").value + '&' + hw1_ava)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
           hw1_ava = hw1_ava - text.qty;
-          alert(text.qty + " hardware sets checked out by " + text.projectID + " in set 1.");
+          alert(text.qty + " hardware sets checked out by project " + projectID + " in set 1.");
           window.location.reload();
       });
 }
 
 function checkOut_hardware2(){
-    fetch('/manageproject/out2/' + document.getElementById("input2").value + '&' + hw2_ava)
+    fetch('/manageproject/out2/' + projectID + '&' + document.getElementById("input2").value + '&' + hw2_ava)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
           hw2_ava = hw2_ava - text.qty;
-          alert(text.qty + " hardware sets checked out by " + text.projectID + " in set 2.");
+          alert(text.qty + " hardware sets checked out by project " + projectID + " in set 2.");
           window.location.reload();
       });
 }
@@ -103,7 +103,8 @@ export const Project_Home = (props) => {
 
    return (
     <div className="login-container">
-      <h1> Manage project Id: {props.projectId}</h1>
+      <h1> Manage project </h1>
+      <label> {projectID} </label>
       <Project av1={hw1_ava} av2={hw2_ava}/>
       <p/>
     </div>
