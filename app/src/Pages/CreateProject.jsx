@@ -44,8 +44,8 @@ export const CreateProject = () => {
 
     return (
         <div className="create-project-container">
-            <h1> Create Project</h1>
             <form onSubmit={handleSubmit}>
+                <h2>Create Project</h2>
                 <label htmlFor="projectname">Project Name</label>
                 <input value={projectname}
                        onChange={(e) => setProjectName(e.target.value)}

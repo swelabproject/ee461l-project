@@ -42,10 +42,10 @@ def validate_credentials():
         return jsonify({"validation": 'poop'})
 
 
-@app.route('/createNewUser')
-@cross_origin()
-def create_new_user():
-    return jsonify('test - hit the server!!')
+# @app.route('/createNewUser')
+# @cross_origin()
+# def create_new_user():
+#     return jsonify('test - hit the server!!')
 
 
 @app.route("/validateUsername", methods=['POST'])

@@ -77,12 +77,19 @@ input {
   border: 1px solid black;
 }
 
+userCol {
+  align-items: center;
+  margin: 0.5rem 0;
+  padding: 5rem;
+}
+
 button {
   border: none;
   background-color: lightskyblue;
   padding: 15px;
   color: white;
   cursor: pointer;
+  align-items: center;
 }
 
 .redirect {
@@ -118,5 +125,12 @@ button {
   justify-content: center;
   color: white;
   font-size: larger;
-  margin: 1%;
+  margin: 4%;
+  margin-left: 10%;
 }
+
+.colitems {
+  margin: 10%;
+  margin-top: 20%;
+}
+

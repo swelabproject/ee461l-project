@@ -36,7 +36,7 @@ export const UserHomePage = (props) => {
     projects.map((project) => {
         // const res = fetch("/getAuthorizedProjectNames", project)
         // const projname = res.json()
-        buttonslist.push(<button type="button" onClick={(e) => props.onPageUpdate('new-user')} className="project-button">
+        buttonslist.push(<button type="button" onClick={(e) => props.onPageUpdate('project-home')} className="project-button">
             {project}
         </button>)
     })
@@ -50,13 +50,18 @@ export const UserHomePage = (props) => {
 
     return (
         <div className="login-container">
-            <h1> Welcome {props.username} !</h1>
-            <h2> Project List </h2>
-            {buttonslist}
-            {/*/!* <button type="button" onClick={(e) => handlePage("added to buttons")}className="project-button"> {projects[0]} </button>  *!/*/}
-            {/*/!* <Buttons>1</Buttons> *!/*/}
-            {/*/!* <ul>{projects}</ul> *!/*/}
-            {/*{Buttons}*/}
+            <h1> Welcome {props.username}!</h1>
+            <div className="userRow" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gridGap: 20 }}>
+                <div className="userCol">
+                    <div className="colitems">
+                        <h2> Project List </h2>
+                        {buttonslist}
+                    </div>
+                </div>
+                <div className="userCol">
+                    <CreateProject {...props} />
+                </div>
+            </div>
         </div>
     );
 
