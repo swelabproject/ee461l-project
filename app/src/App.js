@@ -4,6 +4,7 @@ import { CreateProject } from "./Pages/CreateProject"
 import { Forgot } from "./Pages/Forgot"
 import './Pages/stylesheet.css';
 import {Create_User} from "./Pages/Create_User";
+import {UserHomePage} from "./Pages/UserHomePage"; 
 
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
         console.log("on the user home page");
         return (
            <div>
-               <p> user home page placeholder </p>
+               <UserHomePage onPageUpdate={togglePage}/>
                <button onClick={() => setCurrentPage('create-project')}className="redirect"> Create a project.</button>
                <button onClick={() => setCurrentPage('login')}className="redirect"> Return to Login page.</button>
            </div>
