@@ -104,7 +104,7 @@ export const Project_Home = (props) => {
    return (
     <div className="login-container">
       <h1> Manage project </h1>
-      <label> {projectID} </label>
+      <label> Project ID: {projectID} </label>
       <Project av1={hw1_ava} av2={hw2_ava}/>
       <p/>
     </div>
