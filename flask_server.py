@@ -101,7 +101,34 @@ def create_project():
         post_id = col.insert_one(post).inserted_id  # adds the document to the collection
         return jsonify("no existing project found")
     
-   
+
+@app.route("/getAuthorizedProjects", methods=['POST'])
+@cross_origin()
+def getAuthorizedProjects():
+    print("#####################")
+    try:
+        data = request.json
+        user = data["username"]
+        client_connection = pymongo.MongoClient(
+            "mongodb+srv://jgirish:DrLQnjpMZlqiUjm9@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
+        db = client_connection.SWELAB
+        col = db.Users
+        print("hi")
+        found = col.find_one({"id": user})
+        if col.count_documents(found):
+            print(found)
+            return jsonify({"projects": found['authorized_projects']})
+        else:
+            print("no")
+            return jsonify({"validation": 'invalid'})
+
+    except Exception as ex:
+        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        print(message)
+        return jsonify({"validation": 'invalid'})
+
+
 @app.route('/manageproject')
 def retrieve():
     client = pymongo.MongoClient("mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
