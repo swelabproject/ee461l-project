@@ -31,15 +31,19 @@ export const UserHomePage = (props) => {
 
     let buttonslist = []
     console.log(projects)
-    // const res = fetch("/getAuthorizedProjectNames", projects)
+    if (projects.length === 0) {
+        buttonslist.push("No current projects.")
+    } else {
+       // const res = fetch("/getAuthorizedProjectNames", projects)
     // const projname = res.json()
-    projects.map((project) => {
-        // const res = fetch("/getAuthorizedProjectNames", project)
-        // const projname = res.json()
-        buttonslist.push(<button type="button" onClick={(e) => props.onPageUpdate('project-home')} className="project-button">
-            {project}
-        </button>)
-    })
+        projects.map((project) => {
+            // const res = fetch("/getAuthorizedProjectNames", project)
+            // const projname = res.json()
+            buttonslist.push(<button type="button" onClick={(e) => props.onPageUpdate('project-home')} className="project-button">
+                {project}
+            </button>)
+        })
+    }
 
     // const handlePage = (val) => {
     //     props.onPageUpdate('new-user') //change to vistors page
