@@ -1,7 +1,7 @@
 import React from 'react';
 import './stylesheet.css';
 
-var projectID = "test_project"
+var projectID;
 var hw1_ava;
 var hw2_ava;
 
