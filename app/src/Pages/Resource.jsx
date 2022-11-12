@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import Button from '@mui/material/Button';
-import logo from './logo.svg';
+import React from 'react';
 import './stylesheet.css';
 
 // taken from prev page
@@ -92,8 +90,8 @@ class Project extends React.Component {
   }
 }
 
-function App() {
-  fetch('/manageproject')
+export const Project_Home = (props) => {
+   fetch('/manageproject')
       .then(function (response) {
           return response.json();
       }).then(function (text) {
@@ -102,13 +100,14 @@ function App() {
           hw2_ava = text.Ava2;
           document.getElementById('set2').innerHTML = 'HWSet2: ' + hw2_ava + '/100 ';
       });
-  return (
+
+   return (
     <div className="login-container">
       <h1> Manage project </h1>
       <Project av1={hw1_ava} av2={hw2_ava}/>
       <p/>
     </div>
-  );
+  )
 }
 
-export default App;
+export default Project_Home;
