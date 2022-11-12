@@ -116,5 +116,7 @@ button {
   min-width: 20vh;
   align-items: center;
   justify-content: center;
-  color: lightskyblue;
+  color: white;
+  font-size: larger;
+  margin: 1%;
 }

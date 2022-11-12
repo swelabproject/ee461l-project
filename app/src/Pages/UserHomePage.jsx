@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import './stylesheet.css';
 import { CreateProject } from "./CreateProject";
 import { useEffect } from "react";
-import { Accordion } from "react-bootstrap"
 
 
 //do the let project = [call the API for array under authorized users]
@@ -22,42 +21,42 @@ export const UserHomePage = (props) => {
         const response = await fetch("/getAuthorizedProjects", information); 
         const value = await response.json(); 
         console.log("reached")
-        setProjects(value.projects); 
-        console.log(value.projects); 
-    } 
-   
+        setProjects(value.projects);
+        console.log(value.projects);
+    }
+
     useEffect(() => {
         listOfProjects();
     }, []); 
 
-    
-    
+    let buttonslist = []
+    console.log(projects)
+    // const res = fetch("/getAuthorizedProjectNames", projects)
+    // const projname = res.json()
+    projects.map((project) => {
+        // const res = fetch("/getAuthorizedProjectNames", project)
+        // const projname = res.json()
+        buttonslist.push(<button type="button" onClick={(e) => props.onPageUpdate('new-user')} className="project-button">
+            {project}
+        </button>)
+    })
 
-        
-    const handlePage = (val) => {
-        props.onPageUpdate('new-user') //change to vistors page 
-    }
+    // const handlePage = (val) => {
+    //     props.onPageUpdate('new-user') //change to vistors page
+    // }
 
-    const Buttons = (props) => {
-        return (
-            <div>
-                {projects.map((project) => (<div>{<button type="button" onClick={(e) => handlePage("added to buttons")}className="redirect"> {project} Project1 </button> }</div>)
-                //<li>{project}</li>
-                //<li>{<button type="button" onClick={(e) => handlePage("added to buttons")}className="redirect"> {project} Project1 </button> }</li>
-                )}
-                </div>
-        )}
+
         
 
     return (
         <div className="login-container">
             <h1> Welcome {props.username} !</h1>
             <h2> Project List </h2>
-
-            {/* <button type="button" onClick={(e) => handlePage("added to buttons")}className="project-button"> {projects[0]} </button>  */}
-            {/* <Buttons>1</Buttons> */}
-            {/* <ul>{projects}</ul> */}
-            {Buttons}
+            {buttonslist}
+            {/*/!* <button type="button" onClick={(e) => handlePage("added to buttons")}className="project-button"> {projects[0]} </button>  *!/*/}
+            {/*/!* <Buttons>1</Buttons> *!/*/}
+            {/*/!* <ul>{projects}</ul> *!/*/}
+            {/*{Buttons}*/}
         </div>
     );
 
