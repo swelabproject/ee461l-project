@@ -10,16 +10,16 @@ import { useEffect } from "react";
 
 
 export const UserHomePage = (props) => {
-    const  [projects, setProjects] = useState([]); 
-    console.log(props.username); 
+    const  [projects, setProjects] = useState([]);
+    console.log(props.username);
     async function listOfProjects() {
         const information = {
-            method: "POST", 
-            headers: { 'content-type': 'application/json'}, 
+            method: "POST",
+            headers: { 'content-type': 'application/json'},
             body: JSON.stringify({ "username": props.username})
         }
-        const response = await fetch("/getAuthorizedProjects", information); 
-        const value = await response.json(); 
+        const response = await fetch("/getAuthorizedProjects", information);
+        const value = await response.json();
         console.log("reached")
         setProjects(value.projects);
         console.log(value.projects);
@@ -27,7 +27,7 @@ export const UserHomePage = (props) => {
 
     useEffect(() => {
         listOfProjects();
-    }, []); 
+    }, []);
 
     let buttonslist = []
     console.log(projects)
@@ -45,8 +45,6 @@ export const UserHomePage = (props) => {
     //     props.onPageUpdate('new-user') //change to vistors page
     // }
 
-
-        
 
     return (
         <div className="login-container">
