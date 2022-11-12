@@ -29,6 +29,11 @@ export const UserHomePage = (props) => {
         listOfProjects();
     }, []);
 
+    const buttonClick = (e) => {
+        props.onProject(e)
+        props.onPageUpdate("project-home")
+    }
+
     let buttonslist = []
     console.log(projects)
     if (projects.length === 0) {
@@ -39,7 +44,8 @@ export const UserHomePage = (props) => {
         projects.map((project) => {
             // const res = fetch("/getAuthorizedProjectNames", project)
             // const projname = res.json()
-            buttonslist.push(<button type="button" onClick={(e) => props.onPageUpdate('project-home')} className="project-button">
+            let projID = project
+            buttonslist.push(<button type="button" onClick={(e) => buttonClick(projID)} className="project-button">
                 {project}
             </button>)
         })
