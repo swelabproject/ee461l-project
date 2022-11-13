@@ -2,6 +2,8 @@ import React from 'react';
 import './stylesheet.css';
 
 var projectID;
+var out1;
+var out2;
 var hw1_ava;
 var hw2_ava;
 
@@ -78,12 +80,14 @@ class Project extends React.Component {
           <input id="input1" type="text" placeholder="Quantity"/>
           <CheckInButton set="1"/>
           <CheckOutButton set="1"/>
+          <span id="out1"/>
         </p>
         <p>
           <span id="set2"/>
           <input id="input2" type="text" placeholder="Quantity"/>
           <CheckInButton set="2"/>
           <CheckOutButton set="2"/>
+          <span id="out2"/>
         </p>
       </div>
     );
@@ -91,20 +95,24 @@ class Project extends React.Component {
 }
 
 function App() {
-  fetch('/manageproject')
+  fetch('/manageproject/' + projectID)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
-          projectID = {props.projectID}
+          projectID = {props.projectID};
           hw1_ava = text.Ava1;
           document.getElementById('set1').innerHTML = 'HWSet1: ' + hw1_ava + '/100 ';
           hw2_ava = text.Ava2;
           document.getElementById('set2').innerHTML = 'HWSet2: ' + hw2_ava + '/100 ';
+          out1 = text.Out1;
+          document.getElementById('out1').innerHTML = '(Sets checked out now: ' + out1 + ')';
+          out2 = text.Out2;
+          document.getElementById('out2').innerHTML = '(Sets checked out now: ' + out2 + ')';
       });
   return (
     <div className="login-container">
       <h1> Manage project </h1>
-      <label> {projectID} </label>
+      <label> Project ID: {projectID} </label>
       <Project av1={hw1_ava} av2={hw2_ava}/>
       <p/>
     </div>
