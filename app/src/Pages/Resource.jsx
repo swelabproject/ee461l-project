@@ -94,12 +94,12 @@ class Project extends React.Component {
   }
 }
 
-function App() {
+export const Project_Home = (props) => {
   fetch('/manageproject/' + projectID)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
-          projectID = {props.projectID};
+          projectID = props.projectID;
           hw1_ava = text.Ava1;
           document.getElementById('set1').innerHTML = 'HWSet1: ' + hw1_ava + '/100 ';
           hw2_ava = text.Ava2;
