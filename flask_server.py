@@ -166,6 +166,7 @@ def getAuthorizedProjectNames():
 #manage project
 
 @app.route('/manageproject/<projectID>')
+@cross_origin()
 def retrieve(projectID):
     client = pymongo.MongoClient("mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
     db = client.SWELAB
@@ -179,6 +180,7 @@ def retrieve(projectID):
     return jsonify(msg)
 
 @app.route('/manageproject/in1/<projectID>&<int:qty>&<int:ava>')
+@cross_origin()
 def checkIn_hardwareSet1(projectID, qty, ava):
     client = pymongo.MongoClient("mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
     db = client.SWELAB
@@ -200,6 +202,7 @@ def checkIn_hardwareSet1(projectID, qty, ava):
     return jsonify(msg)
 
 @app.route('/manageproject/in2/<projectID>&<int:qty>&<int:ava>')
+@cross_origin()
 def checkIn_hardwareSet2(projectID, qty, ava):
     client = pymongo.MongoClient("mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
     db = client.SWELAB
@@ -221,6 +224,7 @@ def checkIn_hardwareSet2(projectID, qty, ava):
     return jsonify(msg)
 
 @app.route('/manageproject/out1/<projectID>&<int:qty>&<int:ava>')
+@cross_origin()
 def checkOut_hardwareSet1(projectID, qty, ava):
     client = pymongo.MongoClient("mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
     db = client.SWELAB
@@ -239,6 +243,7 @@ def checkOut_hardwareSet1(projectID, qty, ava):
     return jsonify(msg)
 
 @app.route('/manageproject/out2/<projectID>&<int:qty>&<int:ava>')
+@cross_origin()
 def checkOut_hardwareSet2(projectID, qty, ava):
     client = pymongo.MongoClient("mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
     db = client.SWELAB
@@ -256,7 +261,6 @@ def checkOut_hardwareSet2(projectID, qty, ava):
     client.close()
     return jsonify(msg)
 
-#create new user
 
 @app.route('/createNewUser' , methods=['POST'])
 @cross_origin()
@@ -295,30 +299,6 @@ def create_new_user():
         post_id = col.insert_one(post).inserted_id  # adds the document to the collection
         return jsonify("no existing user ID found ; adding user to db")
 
-# @app.route('/getAuthorizedProjects', methods=['POST'])
-# @cross_origin()
-# def getAuthorizedProjects():
-#     print("hi")
-#     try:
-#         data = request.json
-#         print(data)
-#         username = data["username"]
-#         client_connection = pymongo.MongoClient(
-#             "mongodb+srv://jgirish:DrLQnjpMZlqiUjm9@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
-#         db = client_connection.SWELAB
-#         col = db.Users
-#         print(username)
-#         found = col.find_one({"id": username})
-#         print(found)
-#         if col.count_documents(found):
-#             print("id exists")
-#             print(found)
-#             return jsonify({"projects": found["authorized_projects"]})
-
-#     except Exception as ex:
-#         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
-#         message = template.format(type(ex).__name__, ex.args)
-#         print(message)
 
 
 if __name__ == '__main__':
