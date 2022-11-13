@@ -1,50 +1,52 @@
 import React from 'react';
 import './stylesheet.css';
 
-// taken from prev page
+var projectID;
+var out1;
+var out2;
 var hw1_ava;
 var hw2_ava;
 
 function checkIn_hardware1(){
-    fetch('/manageproject/in1/' + document.getElementById("input1").value + '&' + hw1_ava)
+    fetch('/manageproject/in1/' + projectID + '&' + document.getElementById("input1").value + '&' + hw1_ava)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
           hw1_ava = hw1_ava + text.qty;
-          alert(text.qty + " hardware sets checked in by " + text.projectID + " in set 1.");
+          alert(text.qty + " hardware sets checked in by " + projectID + " in set 1.");
           window.location.reload();
       });
 }
 
 function checkIn_hardware2(){
-    fetch('/manageproject/in2/' + document.getElementById("input2").value + '&' + hw2_ava)
+    fetch('/manageproject/in2/' + projectID + '&' + document.getElementById("input2").value + '&' + hw2_ava)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
           hw2_ava = hw2_ava + text.qty;
-          alert(text.qty + " hardware sets checked in by " + text.projectID + " in set 2.");
+          alert(text.qty + " hardware sets checked in by " + projectID + " in set 2.");
           window.location.reload();
       });
 }
 
 function checkOut_hardware1(){
-    fetch('/manageproject/out1/' + document.getElementById("input1").value + '&' + hw1_ava)
+    fetch('/manageproject/out1/' + projectID + '&' + document.getElementById("input1").value + '&' + hw1_ava)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
           hw1_ava = hw1_ava - text.qty;
-          alert(text.qty + " hardware sets checked out by " + text.projectID + " in set 1.");
+          alert(text.qty + " hardware sets checked out by " + projectID + " in set 1.");
           window.location.reload();
       });
 }
 
 function checkOut_hardware2(){
-    fetch('/manageproject/out2/' + document.getElementById("input2").value + '&' + hw2_ava)
+    fetch('/manageproject/out2/' + projectID + '&' + document.getElementById("input2").value + '&' + hw2_ava)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
           hw2_ava = hw2_ava - text.qty;
-          alert(text.qty + " hardware sets checked out by " + text.projectID + " in set 2.");
+          alert(text.qty + " hardware sets checked out by " + projectID + " in set 2.");
           window.location.reload();
       });
 }
@@ -78,36 +80,43 @@ class Project extends React.Component {
           <input id="input1" type="text" placeholder="Quantity"/>
           <CheckInButton set="1"/>
           <CheckOutButton set="1"/>
+          <span id="out1"/>
         </p>
         <p>
           <span id="set2"/>
           <input id="input2" type="text" placeholder="Quantity"/>
           <CheckInButton set="2"/>
           <CheckOutButton set="2"/>
+          <span id="out2"/>
         </p>
       </div>
     );
   }
 }
 
-export const Project_Home = (props) => {
-   fetch('/manageproject')
+function App() {
+  fetch('/manageproject/' + projectID)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
+          projectID = {props.projectID};
           hw1_ava = text.Ava1;
           document.getElementById('set1').innerHTML = 'HWSet1: ' + hw1_ava + '/100 ';
           hw2_ava = text.Ava2;
           document.getElementById('set2').innerHTML = 'HWSet2: ' + hw2_ava + '/100 ';
+          out1 = text.Out1;
+          document.getElementById('out1').innerHTML = '(Sets checked out now: ' + out1 + ')';
+          out2 = text.Out2;
+          document.getElementById('out2').innerHTML = '(Sets checked out now: ' + out2 + ')';
       });
-
-   return (
+  return (
     <div className="login-container">
-      <h1> Manage project Id: {props.projectId}</h1>
+      <h1> Manage project </h1>
+      <label> Project ID: {projectID} </label>
       <Project av1={hw1_ava} av2={hw2_ava}/>
       <p/>
     </div>
-  )
+  );
 }
 
 export default Project_Home;
