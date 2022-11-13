@@ -165,14 +165,16 @@ def getAuthorizedProjectNames():
     
 #manage project
 
-@app.route('/manageproject')
-def retrieve():
+@app.route('/manageproject/<projectID>')
+def retrieve(projectID):
     client = pymongo.MongoClient("mongodb+srv://vsaakes:4a8ssvbrPurRpKaP@swelab.bo7ayiw.mongodb.net/?retryWrites=true&w""=majority", tlsCAFile=certifi.where())
     db = client.SWELAB
     sets = db.HWSet
     set1 = sets.find_one({"name": "HWSet1"})
     set2 = sets.find_one({"name": "HWSet2"})
-    msg = {'Ava1': set1["availability"], 'Ava2': set2["availability"]}
+    projs = db.Projects
+    proj = projs.find_one({"id": projectID})
+    msg = {'Ava1': set1["availability"], 'Ava2': set2["availability"], 'Out1': proj["checkedout_hw1"], 'Out2': proj["checkedout_hw2"]}
     client.close()
     return jsonify(msg)
 
