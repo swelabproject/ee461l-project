@@ -4,51 +4,50 @@ import logo from './logo.svg';
 import './stylesheet.css';
 
 // taken from prev page
-const userId = "USER A";
-const projectId = "PROJECT X";
+var projectID;
 var hw1_ava;
 var hw2_ava;
 
 function checkIn_hardware1(){
-    fetch('/manageproject/in1/' + projectId + '&' + document.getElementById("input1").value + '&' + hw1_ava)
+    fetch('/manageproject/in1/' + projectID + '&' + document.getElementById("input1").value + '&' + hw1_ava)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
           hw1_ava = hw1_ava + text.qty;
-          alert(text.qty + " hardware sets checked in by " + text.projectID + " in set 1.");
+          alert(text.qty + " hardware sets checked in by " + projectID + " in set 1.");
           window.location.reload();
       });
 }
 
 function checkIn_hardware2(){
-    fetch('/manageproject/in2/' + projectId + '&' + document.getElementById("input2").value + '&' + hw2_ava)
+    fetch('/manageproject/in2/' + projectID + '&' + document.getElementById("input2").value + '&' + hw2_ava)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
           hw2_ava = hw2_ava + text.qty;
-          alert(text.qty + " hardware sets checked in by " + text.projectID + " in set 2.");
+          alert(text.qty + " hardware sets checked in by " + projectID + " in set 2.");
           window.location.reload();
       });
 }
 
 function checkOut_hardware1(){
-    fetch('/manageproject/out1/' + projectId + '&' + document.getElementById("input1").value + '&' + hw1_ava)
+    fetch('/manageproject/out1/' + projectID + '&' + document.getElementById("input1").value + '&' + hw1_ava)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
           hw1_ava = hw1_ava - text.qty;
-          alert(text.qty + " hardware sets checked out by " + text.projectID + " in set 1.");
+          alert(text.qty + " hardware sets checked out by " + projectID + " in set 1.");
           window.location.reload();
       });
 }
 
 function checkOut_hardware2(){
-    fetch('/manageproject/out2/' + projectId + '&' + document.getElementById("input2").value + '&' + hw2_ava)
+    fetch('/manageproject/out2/' + projectID + '&' + document.getElementById("input2").value + '&' + hw2_ava)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
           hw2_ava = hw2_ava - text.qty;
-          alert(text.qty + " hardware sets checked out by " + text.projectID + " in set 2.");
+          alert(text.qty + " hardware sets checked out by " + projectID + " in set 2.");
           window.location.reload();
       });
 }
@@ -77,7 +76,6 @@ class Project extends React.Component {
   render(){
     return (
       <div>
-        <label> {this.props.name} </label>
         <p>
           <span id="set1"/>
           <input id="input1" type="text" placeholder="Quantity"/>
@@ -100,6 +98,7 @@ function App() {
       .then(function (response) {
           return response.json();
       }).then(function (text) {
+          projectID = {props.projectID}
           hw1_ava = text.Ava1;
           document.getElementById('set1').innerHTML = 'HWSet1: ' + hw1_ava + '/100 ';
           hw2_ava = text.Ava2;
@@ -108,7 +107,8 @@ function App() {
   return (
     <div className="login-container">
       <h1> Manage project </h1>
-      <Project name={projectId} av1={hw1_ava} av2={hw2_ava}/>
+      <label> {projectID} </label>
+      <Project av1={hw1_ava} av2={hw2_ava}/>
       <p/>
     </div>
   );
