@@ -11,7 +11,7 @@ function checkIn_hardware1(){
           return response.json();
       }).then(function (text) {
           hw1_ava = hw1_ava + text.qty;
-          alert(text.qty + " hardware sets checked in by project " + projectID + " in set 1.");
+          alert(text.qty + " hardware sets checked in by " + projectID + " in set 1.");
           window.location.reload();
       });
 }
@@ -22,7 +22,7 @@ function checkIn_hardware2(){
           return response.json();
       }).then(function (text) {
           hw2_ava = hw2_ava + text.qty;
-          alert(text.qty + " hardware sets checked in by project " + projectID + " in set 2.");
+          alert(text.qty + " hardware sets checked in by " + projectID + " in set 2.");
           window.location.reload();
       });
 }
@@ -33,7 +33,7 @@ function checkOut_hardware1(){
           return response.json();
       }).then(function (text) {
           hw1_ava = hw1_ava - text.qty;
-          alert(text.qty + " hardware sets checked out by project " + projectID + " in set 1.");
+          alert(text.qty + " hardware sets checked out by " + projectID + " in set 1.");
           window.location.reload();
       });
 }
@@ -44,7 +44,7 @@ function checkOut_hardware2(){
           return response.json();
       }).then(function (text) {
           hw2_ava = hw2_ava - text.qty;
-          alert(text.qty + " hardware sets checked out by project " + projectID + " in set 2.");
+          alert(text.qty + " hardware sets checked out by " + projectID + " in set 2.");
           window.location.reload();
       });
 }
@@ -90,25 +90,25 @@ class Project extends React.Component {
   }
 }
 
-export const Project_Home = (props) => {
-   fetch('/manageproject')
+function App() {
+  fetch('/manageproject')
       .then(function (response) {
           return response.json();
       }).then(function (text) {
+          projectID = {props.projectID}
           hw1_ava = text.Ava1;
           document.getElementById('set1').innerHTML = 'HWSet1: ' + hw1_ava + '/100 ';
           hw2_ava = text.Ava2;
           document.getElementById('set2').innerHTML = 'HWSet2: ' + hw2_ava + '/100 ';
       });
-
-   return (
+  return (
     <div className="login-container">
       <h1> Manage project </h1>
-      <label> Project ID: {projectID} </label>
+      <label> {projectID} </label>
       <Project av1={hw1_ava} av2={hw2_ava}/>
       <p/>
     </div>
-  )
+  );
 }
 
 export default Project_Home;
