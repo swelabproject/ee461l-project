@@ -95,11 +95,11 @@ class Project extends React.Component {
 }
 
 export const Project_Home = (props) => {
-  fetch('/manageproject/' + projectID)
+  fetch('/manageproject/' + props.projectId)
       .then(function (response) {
           return response.json();
       }).then(function (text) {
-          projectID = props.projectID;
+          projectID = props.projectId;
           hw1_ava = text.Ava1;
           document.getElementById('set1').innerHTML = 'HWSet1: ' + hw1_ava + '/100 ';
           hw2_ava = text.Ava2;
@@ -112,7 +112,7 @@ export const Project_Home = (props) => {
   return (
     <div className="login-container">
       <h1> Manage project </h1>
-      <label> Project ID: props.projectID </label>
+      <label> Project ID: {props.projectId} </label>
       <Project av1={hw1_ava} av2={hw2_ava}/>
       <p/>
     </div>
